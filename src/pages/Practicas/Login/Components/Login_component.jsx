@@ -23,7 +23,7 @@ export default function SignIn() {
   const handleLogin = async () => {
     if (Cookies.get("token")) {
       try {
-        const res = await axios.get("http://localhost:3000/api/auth/verify", {
+        const res = await axios.get("http://localhost:3000/coord/praticas", {
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
           },
@@ -40,15 +40,15 @@ export default function SignIn() {
         "http://localhost:3000/api/auth/google?prompt=select_account";
     }
   };
-  /*
-  const handleLogin = () => {
-    if (Cookies.get('token')) {
-      verifyUser();
-      navigate("/practicas/success");
-    }else{
-      window.location.href = "http://localhost:3000/api/auth/google?prompt=select_account";    }
+  const handleRegister = () => {
+    navigate("/register"); // Redirigir a la ruta de registro
+  };
+  
+  
+  const handleDashboard = () => {
+   navigate("/Dashboard"); 
   }
-  */
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -97,10 +97,12 @@ export default function SignIn() {
             </Box>
             <Box sx={{display:'flex', alignItems:'center', justifyContent:'center'}}>
             <Typography variant="body1" align='center' color='white'>¿No tienes cuenta?</Typography>
-            <Button variant="text" sx={{color:"#12707F"}}>Crear Cuenta</Button>
+            
+            <Button variant="text" onClick={handleRegister} sx={{color:"#12707F"}}>Crear Cuenta</Button>
             </Box>
+            
             <Box sx={{display:'flex', alignItems:'center', justifyContent:'center',}}>
-            <Button variant="contained" onClick={handleLogin} 
+            <Button variant="contained" onClick={handleDashboard} 
                 sx={{
                   backgroundColor: '#12707F',  
                   padding: '1.5rem', 

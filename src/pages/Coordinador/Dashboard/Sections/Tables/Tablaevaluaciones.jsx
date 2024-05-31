@@ -9,6 +9,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import UndoIcon from "@mui/icons-material/Undo";
 import WorkspacePremiumIcon from "@mui/icons-material/WorkspacePremium";
 import CancelIcon from "@mui/icons-material/Close";
+import Avatar1 from "./Avatares/jhon wick.jpg";
 import {
   GridRowModes,
   DataGrid,

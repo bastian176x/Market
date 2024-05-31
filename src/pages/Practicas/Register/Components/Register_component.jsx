@@ -15,19 +15,18 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import axios from "axios";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import GoogleIcon from './Images/Google.png';
+import { useNavigate } from "react-router-dom";
 
-import BackgroundLocal from "./Images/valpoback.jpg";
+import BackgroundLocal from "./Images/logo.png";
 // TODO remove, this demo shouldn't need to reset the theme.
 
 const defaultTheme = createTheme();
-
 export default function SignInSide() {
+  const navigate = useNavigate();
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
-
   const closeSuccessModal = () => {
     setIsSuccessModalOpen(false);
   };
@@ -39,17 +38,16 @@ export default function SignInSide() {
   };
 
   const [inputs, setInputs] = useState({
-    primer_nombre: "",
-    segundo_nombre: "",
-    primer_apellido: "",
-    segundo_apellido: "",
-    rut: "",
-    correo_u: "",
+    nombres: "",
+    apellidos: "",
+    correo: "",
+    name_us:"",
+    contraseña: "",
+    conf_contraseña: "",
     df: "",
-    genero: "",
-    Sede: "",
     agno: "",
-    correo_personal: "",
+    dia: "",
+    mes: "",
   });
 
   const handleChange = (e) => {
@@ -67,28 +65,23 @@ export default function SignInSide() {
       setIsFailureModalOpen(true);
     }
   };
-
+  const handleLogin = () => {
+    navigate("/login"); // Redirigir a la ruta de registro
+  };
+  
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "100vh" }}>
+
+
+      <Grid container component="main" sx={{ backgroundColor: "#043C5C", justifyContent: "center", }}>
+    
+        
         <CssBaseline />
-        <Grid
-          item
-          xs={false}
-          sm={4}
-          md={7}
-          sx={{
-            backgroundImage: `url(${BackgroundLocal})`,
-            backgroundRepeat: "no-repeat",
-            backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-          }}
-        />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+      
+        
+        <Grid item xs={12} sm={6} md={5} component={Paper} elevation={6} square sx={{ width: "80%",
+          height: "90%",
+          borderRadius: "15px", backgroundColor: "rgba(255,255,255,0.3)", justifyContent: "center", }}>
           <Box
             sx={{
               my: 8,
@@ -98,6 +91,18 @@ export default function SignInSide() {
               alignItems: "center",
             }}
           >
+            <Grid
+          item
+          xs={false}
+          sm={4}
+          md={7}
+          sx={{
+            backgroundImage: `url(${BackgroundLocal})`,
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            backgroundPosition: "center",
+          }}
+        />
             <Dialog open={isSuccessModalOpen} onClose={closeSuccessModal}>
               <DialogContent>
                 <Typography variant="h6">¡Usuario registrado!</Typography>
@@ -116,195 +121,300 @@ export default function SignInSide() {
               </DialogContent>
             </Dialog>
 
-            <Typography component="h1" variant="h4" sx={{mb: "10px"}}>
-              Datos del Alumno
+            <Typography component="h1" variant="h4" sx={{mb: "10px", color: "#FFFFFF"}}>
+              Crear Cuenta 
             </Typography>
-            <Typography component="h2" variant="h5">
-              Ingrese sus datos con prudencia, luego estos serán usados para la generación de sus documentos. 
+            <Typography component="h2" variant="h5" sx={{color: "#FFFFFF"}}>
+              Ingrese sus datos 
             </Typography>
+            <Typography component="h4" variant="h7" sx={{color: "#FFFFFF"}}>
+              Ya tienes cuenta? 
+               <Button variant="text" onClick={handleLogin} sx={{color:"#12707F"}}>iniciar sesion</Button>
+            </Typography>
+
+           
+
+            
             <Box
               component="form"
               noValidate
               onSubmit={handleSubmit}
-              sx={{ mt: 1 }}
+              sx={{ mt:  1 ,color: "#FFFFFF"}}
             >
               <TextField
                 margin="normal"
                 required
-                fullWidth
-                id="primer_nombre"
-                label="Ingrese su primer nombre"
-                name="primer_nombre"
+                id="nombres"
+                label="Nombres"
+                name="nombres"
                 autoComplete="username"
                 autoFocus
+                sx={{'& .MuiInputBase-input': {
+                  color: "#FFFFFF", // Color del texto ingresado
+                },
+                '& .MuiInputLabel-root': {
+                  color: "#FFFFFF", // Color del label cuando no está enfocado
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: "#FFFFFF", // Color del label cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                },}}
+                onChange={handleChange}
+              />
+              <TextField
+                margin="normal"
+                required
+                name="apellido"
+                label="Apellidos"
+                type="apellidos"
+                id="apellidos"
+                sx={{'& .MuiInputBase-input': {
+                  color: "#FFFFFF", // Color del texto ingresado
+                },
+                '& .MuiInputLabel-root': {
+                  color: "#FFFFFF", // Color del label cuando no está enfocado
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: "#FFFFFF", // Color del label cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                },}}
+                onChange={handleChange}
+              />
+                <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="name_us"
+                label="Nombre de usuario"
+                type="name_us"
+                id="name_us"
+                sx={{'& .MuiInputBase-input': {
+                  color: "#FFFFFF", // Color del texto ingresado
+                },
+                '& .MuiInputLabel-root': {
+                  color: "#FFFFFF", // Color del label cuando no está enfocado
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: "#FFFFFF", // Color del label cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                },}}
                 onChange={handleChange}
               />
               <TextField
                 margin="normal"
                 required
                 fullWidth
-                name="segundo_nombre"
-                label="Ingrese su segundo nombre"
+                name="correo"
+                label="Ingrese su correo"
                 type="text"
-                id="segundo_nombre"
+                id="correo"
+                sx={{'& .MuiInputBase-input': {
+                  color: "#FFFFFF", // Color del texto ingresado
+                },
+                '& .MuiInputLabel-root': {
+                  color: "#FFFFFF", // Color del label cuando no está enfocado
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: "#FFFFFF", // Color del label cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                },}}
                 onChange={handleChange}
               />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="primer_apellido"
-                label="Ingrese su primer apellido"
-                type="primer_apellido"
-                id="primer_apellido"
-                onChange={handleChange}
+             <TextField
+              margin="normal"
+              required
+              fullWidth
+              name="contraseña"
+              label = "Crear Contraseña"
+              type = "password"
+              id = "contraseña"
+              sx={{'& .MuiInputBase-input': {
+                color: "#FFFFFF", // Color del texto ingresado
+              },
+              '& .MuiInputLabel-root': {
+                color: "#FFFFFF", // Color del label cuando no está enfocado
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: "#FFFFFF", // Color del label cuando está enfocado
+              },
+              '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+              },}}
+              onChange={handleChange}
               />
               <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="segundo_apellido"
-                label="Ingrese su segundo apellido"
-                type="text"
-                id="segundo_apellido"
-                onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="rut"
-                label="Ingrese su rut sin puntos ni guión"
-                type="text"
-                id="rut"
-                onChange={handleChange}
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="correo_u"
-                label="Ingrese su correo institucional"
-                type="text"
-                id="correo_u"
-                onChange={handleChange}
+              margin="normal"
+              required
+              fullWidth
+              name="conf_contraseña:"
+              label = "Confimar Contraseña"
+              type="password"
+              id="conf_contraseña"
+              sx={{'& .MuiInputBase-input': {
+                color: "#FFFFFF", // Color del texto ingresado
+              },
+              '& .MuiInputLabel-root': {
+                color: "#FFFFFF", // Color del label cuando no está enfocado
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: "#FFFFFF", // Color del label cuando está enfocado
+              },
+              '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+              },
+              '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+              },}}
+              onChange={handleChange}
               />
 
               <Box>
-                <Grid container spacing={3}>
+              <Typography component="h3" variant="h6" sx={{mb: "2px"}}>
+              Año de nacimiento:
+            </Typography>
+                <Grid container spacing={2}>
                   {" "}
                   {/* Wrapper Grid container */}
-                  <Grid item xs={6}>
-                    {" "}
-                    {/* First Grid item */}
-                    <FormLabel id="genero">Gender</FormLabel>
-                    <RadioGroup defaultValue="Mujer" name="genero">
-                      <FormControlLabel
-                        value="Mujer"
-                        control={<Radio />}
-                        label="Mujer"
-                      />
-                      <FormControlLabel
-                        value="Hombre"
-                        control={<Radio />}
-                        label="Hombre"
-                      />
-                    </RadioGroup>
-                  </Grid>
-                  <Grid item xs={6}>
-                    {" "}
-                    {/* First Grid item */}
-                    <InputLabel id="df">Dígito Verificador</InputLabel>
-                    <Select
-                      labelId="df"
-                      id="df"
-                      label="df"
-                      name="df"
-                      value={inputs.df}
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"0"}>0</MenuItem>
-                      <MenuItem value={"1"}>1</MenuItem>
-                      <MenuItem value={"2"}>2</MenuItem>
-                      <MenuItem value={"3"}>3</MenuItem>
-                      <MenuItem value={"4"}>4</MenuItem>
-                      <MenuItem value={"5"}>5</MenuItem>
-                      <MenuItem value={"6"}>6</MenuItem>
-                      <MenuItem value={"7"}>7</MenuItem>
-                      <MenuItem value={"8"}>8</MenuItem>
-                      <MenuItem value={"9"}>9</MenuItem>
-                      <MenuItem value={"k"}>k</MenuItem>
-                    </Select>
-                  </Grid>
-                  <Grid item xs={6}>
+              
+                  <Grid item xs={4}>
                     {" "}
                     {/* Second Grid item */}
-                    <InputLabel id="Sede">Sede</InputLabel>
+                    <InputLabel id="mes"></InputLabel>
                     <Select
-                      labelId="Sede"
-                      id="Sede"
-                      label="Sede"
-                      name="Sede"
-                      value={inputs.Sede}
-                      onChange={handleChange}
-                    >
-                      <MenuItem value={"V"}>Valparaíso</MenuItem>
-                      <MenuItem value={"S"}>Santiago</MenuItem>
-                    </Select>
-                  </Grid>
-                  <Grid item xs={6}>
-                    {" "}
-                    {/* Second Grid item */}
-                    <InputLabel id="agno">Año de Ingreso</InputLabel>
-                    <Select
-                      labelId="agno"
-                      id="agno"
-                      label="agno"
-                      name="agno"
+                      labelId="mes"
+                      id="mes"
+                      label="mes"
+                      name="mes"
                       value={inputs.categoria}
                       onChange={handleChange}
+                      fullWidth
+                      sx={{ mt: 2 ,'& .MuiInputBase-input': {
+                        color: "#FFFFFF", // Color del texto ingresado
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: "#FFFFFF", // Color del label cuando no está enfocado
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: "#FFFFFF", // Color del label cuando está enfocado
+                      },
+                      '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                        borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                      },
+                      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                      },}}
                     >
                       <MenuItem value="">
                         <em>None</em>
                       </MenuItem>
-                      <MenuItem value={"2008"}>2008</MenuItem>
-                      <MenuItem value={"2009"}>2009</MenuItem>
-                      <MenuItem value={"2010"}>2010</MenuItem>
-                      <MenuItem value={"2011"}>2011</MenuItem>
-                      <MenuItem value={"2012"}>2012</MenuItem>
-                      <MenuItem value={"2013"}>2013</MenuItem>
-                      <MenuItem value={"2014"}>2014</MenuItem>
-                      <MenuItem value={"2015"}>2015</MenuItem>
-                      <MenuItem value={"2016"}>2016</MenuItem>
-                      <MenuItem value={"2017"}>2017</MenuItem>
-                      <MenuItem value={"2018"}>2018</MenuItem>
-                      <MenuItem value={"2019"}>2019</MenuItem>
-                      <MenuItem value={"2020"}>2020</MenuItem>
-                      <MenuItem value={"2021"}>2021</MenuItem>
-                      <MenuItem value={"2022"}>2022</MenuItem>
-                      <MenuItem value={"2023"}>2023</MenuItem>
-                      <MenuItem value={"2024"}>2024</MenuItem>
+                      <MenuItem value={"Enero"}>Enero</MenuItem>
+                      <MenuItem value={"Febrero"}>Febrero</MenuItem>
+                      <MenuItem value={"Marzo"}>Marzo</MenuItem>
+                      <MenuItem value={"Abril"}>Abril</MenuItem>
+                      <MenuItem value={"Mayo"}>Mayo</MenuItem>
+                      <MenuItem value={"Junio"}>Junio</MenuItem>
+                      <MenuItem value={"Julio"}>Julio</MenuItem>
+                      <MenuItem value={"Agosto"}>Agosto</MenuItem>
+                      <MenuItem value={"Septiembre"}>Septiembre</MenuItem>
+                      <MenuItem value={"Octubre"}>Octubre</MenuItem>
+                      <MenuItem value={"Noviembre"}>Noviembre</MenuItem>
+                      <MenuItem value={"Diciembre"}>Diciembre</MenuItem>
                     </Select>
-                  </Grid>
-                </Grid>
-              </Box>
+                     </Grid>
+              <Grid item xs={4}>
               <TextField
                 margin="normal"
                 required
-                fullWidth
-                name="correo_personal"
-                label="Correo personal"
-                type="correo_personal"
-                id="correo_personal"
+                name="dia"
+                label="Día"
+                type="text"
+                id="dia"
+                sx={{'& .MuiInputBase-input': {
+                  color: "#FFFFFF", // Color del texto ingresado
+                },
+                '& .MuiInputLabel-root': {
+                  color: "#FFFFFF", // Color del label cuando no está enfocado
+                },
+                '& .MuiInputLabel-root.Mui-focused': {
+                  color: "#FFFFFF", // Color del label cuando está enfocado
+                },
+                '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                },
+                '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                  borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                },}}
                 onChange={handleChange}
               />
+              </Grid>
+              <Grid item xs={4}>
+                    <TextField
+                      margin="normal"
+                      required
+                      fullWidth
+                      name="agno"
+                      label="Año"
+                      type="text"
+                      id="agno"
+                      sx={{'& .MuiInputBase-input': {
+                        color: "#FFFFFF", // Color del texto ingresado
+                      },
+                      '& .MuiInputLabel-root': {
+                        color: "#FFFFFF", // Color del label cuando no está enfocado
+                      },
+                      '& .MuiInputLabel-root.Mui-focused': {
+                        color: "#FFFFFF", // Color del label cuando está enfocado
+                      },
+                      '& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline': {
+                        borderColor: "#FFFFFF", // Color del borde cuando no está enfocado
+                      },
+                      '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                        borderColor: "#FFFFFF", // Color del borde cuando está enfocado
+                      },}}
+                      onChange={handleChange}
+                    />
+                  </Grid>   
+                </Grid>
+              </Box>
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
-                sx={{ mt: 3, mb: 2 }}
+                sx={{ mb: 2,borderRadius: "20px"}}
               >
                 Registrarse
+              </Button>
+              <Button
+              type="submit"
+                fullWidth
+                variant= "contained"
+                startIcon={<img src={GoogleIcon} alt="Google Icon" style={{ width: '24px', height: '24px' }} />}
+                sx={{ backgroundColor: '#ffffff', color: '#000000', borderRadius: "20px",'&:hover': { backgroundColor: '#ffffff'} }}
+              >
+                Ingresar por Cuneta de google
               </Button>
             </Box>
           </Box>

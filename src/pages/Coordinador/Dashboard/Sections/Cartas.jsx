@@ -26,7 +26,14 @@ function Cartas() {
   return (
     <Box sx={{ display: "flex" }}>
       <Sidebar />
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+      <Box 
+          component="main" 
+          sx={{ 
+            flexGrow: 1, 
+            p: 3,
+            marginTop: 8 // Ajusta este valor según la altura de tu barra superior
+          }}
+        >
         <Box sx={{ display: "flex", gap: 2 }}>
           {/* Card for Generic Letters */}
           <Card sx={{ minWidth: 275, maxWidth: 500 }}>
