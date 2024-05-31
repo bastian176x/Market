@@ -1,6 +1,7 @@
 import React, { lazy } from "react";
 import Loadable from "../layouts/Loadable";
 import { Navigate } from "react-router-dom";
+import CartasyPosts from "../pages/Practicas/Gen/CartasyPost";
 
 /* ***Layouts**** */
 const FullLayout = Loadable(
@@ -37,8 +38,8 @@ const Inicocoord = Loadable(
 const Dashboard = Loadable(
   lazy(() => import("../pages/Coordinador/Dashboard/Sections/Dashboard"))
 );
-const Postulaciones = Loadable(
-  lazy(() => import("../pages/Coordinador/Dashboard/Sections/Postulaciones"))
+const AgregarProct = Loadable(
+  lazy(() => import("../pages/Coordinador/Dashboard/Sections/agregarProct"))
 );
 const Cartas = Loadable(
   lazy(() => import("../pages/Coordinador/Dashboard/Sections/Cartas"))
@@ -66,6 +67,13 @@ const Router = [
       { path: "", exact: true, element: <Inicio /> },
       { path: "*", element: <Navigate to="/404" /> },
       { path: "404", element: <Error /> },
+      { path: "register", exact: true, element: <Register /> },
+      { path: "login", exact: true, element: <Login /> },
+      { path: "home", exact: true, element: <Inicio /> },
+      {path: "Dashboard", exact: true, element: <Dashboard/>}
+      
+
+
     ],
   },
   {
@@ -91,10 +99,11 @@ const Router = [
     children: [
       { path: "", exact: true, element: <Dashboard /> },
       { path: "*", element: <Navigate to="/404" /> },
-      { path: "postulaciones", exact: true, element: <Postulaciones /> },
+      { path: "agregarProct", exact: true, element: <AgregarProct /> },
       { path: "cartas", exact: true, element: <Cartas /> },
       { path: "settings", exact: true, element: <Settings /> },
       { path: "reportes", exact: true, element: <Reportes /> },
+      
     ],
   },
 ];

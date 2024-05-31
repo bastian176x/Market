@@ -28,13 +28,10 @@ const randomRole = () => {
 const initialRows = [
   {
     id: randomId(),
-    run: "12345678-9",
     nombre: "Jacinta ",
     apellidop: "Mayo",
-    apellidom: "Perez",
     fsolicitud: "Día 9-12-2023 \nHora 12:00",
     factualizacion: "Día 13-12-2023 \nHora 13:00",
-    practica: "Segunda",
     estado: "Sin acción",
   },
 ];
@@ -93,7 +90,6 @@ export default function Tablaevaluaciones() {
   };
 
   const columns = [
-    { field: "run", headerName: "RUN", width: 180 },
     {
       field: "nombre",
       headerName: "Nombre",
@@ -109,37 +105,9 @@ export default function Tablaevaluaciones() {
       headerAlign: "left",
     },
     {
-      field: "apellidom",
-      headerName: "A. Materno",
-      width: 100,
-      align: "left",
-      headerAlign: "left",
-    },
-    {
       field: "fsolicitud",
       headerName: "Fecha Solicitud",
       width: 140,
-      align: "left",
-      headerAlign: "left",
-    },
-    {
-      field: "factualizacion",
-      headerName: "Fecha Actualización",
-      width: 140,
-      align: "left",
-      headerAlign: "left",
-    },
-    {
-      field: "practica",
-      headerName: "Práctica",
-      width: 80,
-      align: "left",
-      headerAlign: "left",
-    },
-    {
-      field: "estado",
-      headerName: "Estado",
-      width: 100,
       align: "left",
       headerAlign: "left",
     },

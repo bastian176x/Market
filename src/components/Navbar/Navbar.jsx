@@ -1,215 +1,112 @@
 import * as React from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
-import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Divider from "@mui/material/Divider";
+import MuiAppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+import MenuIcon from "@mui/icons-material/Menu";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
 import { useNavigate } from "react-router-dom";
+import InboxIcon from "@mui/icons-material/MoveToInbox";
+import logo from "./image/logo.png"
+import { Avatar } from "@mui/material";
+import SearchIcon from '@mui/icons-material/Search';
+import InputAdornment from '@mui/material/InputAdornment';
+import NotificationsIcon from "@mui/icons-material/Notifications";
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
 
-const drawerWidth = 240;
 
-const openedMixin = (theme) => ({
-  width: drawerWidth,
-  transition: theme.transitions.create("width", {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.enteringScreen,
-  }),
-  overflowX: "hidden",
-});
-
-const closedMixin = (theme) => ({
-  transition: theme.transitions.create("width", {
+const AppBar = styled(MuiAppBar)(({ theme }) => ({
+  transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
-  overflowX: "hidden",
-  width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
-});
-
-const DrawerHeader = styled("div")(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "flex-end",
-  padding: theme.spacing(0, 1),
-  // necessary for content to be below app bar
-  ...theme.mixins.toolbar,
+  width: '100%',
+  zIndex: theme.zIndex.drawer + 1,
 }));
 
-const Drawer = styled(MuiDrawer, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  width: drawerWidth,
-  flexShrink: 0,
-  whiteSpace: "nowrap",
-  boxSizing: "border-box",
-  ...(open && {
-    ...openedMixin(theme),
-    "& .MuiDrawer-paper": openedMixin(theme),
-  }),
-  ...(!open && {
-    ...closedMixin(theme),
-    "& .MuiDrawer-paper": closedMixin(theme),
-  }),
+const Main = styled('main')(({ theme }) => ({
+  flexGrow: 1,
+  padding: theme.spacing(3),
 }));
 
-export default function MiniDrawer() {
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(true);
+
+
+
+export default function ButtonAppBar() {
   const navigate = useNavigate();
 
-  return (
-    <Box sx={{ display: "flex" }}>
-      <CssBaseline />
 
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={() => setOpen(!open)}>
-            {theme.direction === "rtl" ? (
-              <ChevronRightIcon />
-            ) : (
-              <ChevronLeftIcon />
-            )}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          <ListItem
-            key="Home"
-            disablePadding
-            sx={{ display: "block" }}
+  return (
+    <Box sx={{ display: 'flex',  }}>
+      <CssBaseline />
+      <AppBar position="fixed" sx={{ backgroundColor:"#043C5C"}}>
+        <Toolbar>
+          <Typography variant="h5" noWrap component="div" sx={{ flexGrow: 1 , display: 'flex', alignItems: 'center'}}>
+            
+          <Box
+            component="img"
+            src={logo} // Usa la imagen importada
+            alt="Logo"
+            
+            sx={{ mr: 5, width: 120, height: 60 }} // Ajusta el tamaño de la imagen
+          />
+          MARKETPLACE UV
+          </Typography>
+          <TextField
+            variant="outlined"
+            placeholder="Buscar..."
+            size="small"
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+            sx={{
+              backgroundColor: '#FFFFFF',
+              borderRadius: 1,
+              marginRight: 2,
+              width: '30%', // Ajusta el ancho del campo de texto
+            }}
+          />
+          <Button
+            color="inherit"
             onClick={() => navigate("/coord/practicas")}
           >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key="Postulaciones"
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={()=>(navigate("/coord/practicas/postulaciones"))}
+            Home
+          </Button>
+          <Button
+            color="inherit"
+            onClick={() => navigate("/coord/practicas/agregarProct")}
           >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Postulaciones"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key="Cartas" disablePadding sx={{ display: "block" }} onClick={()=>(navigate("/coord/practicas/cartas"))}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Cartas" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem key="Reportes" disablePadding sx={{ display: "block" }} onClick={()=>(navigate("/coord/practicas/reportes"))}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText primary="Reportes" sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem
-            key="Ajustes y estadísticas"
-            disablePadding
-            sx={{ display: "block" }}
-            onClick={()=>(navigate("/coord/practicas/settings"))}
+            agregar producto
+          </Button>
+          <Button
+            color="inherit"
+            startIcon={<NotificationsIcon />}
+            onClick={() => navigate("/coord/practicas/cartas")}
           >
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                <InboxIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary="Ajustes y estadísticas"
-                sx={{ opacity: open ? 1 : 0 }}
-              />
-            </ListItemButton>
-          </ListItem>
-        </List>
-        <Divider />
-        <List></List>
-      </Drawer>
+          </Button>
+       
+          <Button
+            color="inherit"
+            startIcon={<Avatar />}
+            onClick={() => navigate("/coord/practicas/settings")}
+          >
+          </Button>
+        </Toolbar>
+      </AppBar>
+      <Main>
+       
+      </Main>
     </Box>
   );
 }

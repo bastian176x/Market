@@ -160,7 +160,6 @@ export default function SignIn() {
                 Ingresar con google
               </Button>
             </Box>
-           
           </Box>
         </Box>
       </Box>

@@ -3,7 +3,7 @@ import SingInAside from './Components/Register_component'
 import { Box } from '@mui/system'
 
 const Register = () => {
-  return (    
+  return (
       <Box>
         <SingInAside /> 
       </Box>
