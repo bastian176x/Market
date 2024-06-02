@@ -14,7 +14,7 @@ function Settings() {
 
   return (
     <>
-      <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", minHeight: "100vh", flexDirection: "column", backgroundColor: "#E3FFFE" }}>
         <Sidebar />
         <Box component="main" sx={{ flexGrow: 1, p: 3, flex: 1 }}>
           <h1>Ajustes y estadísticas</h1>

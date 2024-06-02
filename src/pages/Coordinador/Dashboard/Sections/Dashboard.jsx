@@ -34,26 +34,19 @@ function Dashboard() {
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh", backgroundColor: "#E3FFFE", mt: 2 }}>
         <Sidebar />
-        <Box 
-          component="main" 
-          sx={{ 
-            flexGrow: 1, 
-            p: 3,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center", 
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h2">Explorar</Typography>
+        
+          <Typography variant="h2" sx={{textAlign:"center"}}>Bienvenidos a MarketPlaceUV!</Typography>
+          <Typography variant="body1" sx={{textAlign:"center"}}>Aquí encontrarás productos de estudiantes de la Universidad Valparaíso, tanto 
+          de la sede central como de la sede de Santiago</Typography>
+          
           
           <Box sx={{ mt: 4, width: '100%' }}>
-            <Typography variant="h4">Lista de Productos</Typography>
+            <Typography variant="h4">Productos publicados</Typography>
             <ProductList items={items} handleEdit={handleEdit} handleDelete={handleDelete} />
           </Box>
-        </Box>
+        
       </Box>
     </>
   );
