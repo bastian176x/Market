@@ -25,6 +25,7 @@ function AddProductPage() {
             flexDirection: "column",
             justifyContent: "center", 
             alignItems: "center",
+            backgroundColor: "#E3FFFE",
           }}
         >
           <Typography variant="h2">Agregar Producto</Typography>
