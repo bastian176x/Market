@@ -1,24 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { getAuth, signOut } from "firebase/auth";
-import {
-  getDatabase,
-  onValue,
-  push,
-  ref,
-  remove,
-  set,
-  update,
-} from "firebase/database";
-import {
-  getDownloadURL,
-  getStorage,
-  ref as storageRef,
-  uploadBytes,
-} from "firebase/storage";
+import React, { useState, useEffect } from "react";
 import appFirebase from "../credenciales";
-import "./Home.css";
-import logo from "../assets/logo.png"; 
+import { getAuth, signOut } from "firebase/auth";
+import { getDatabase, ref, push, set, onValue, remove, update } from "firebase/database";
+import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "firebase/storage";
+import Notifications from "./Notifications";
 import Chat from "./Chat";
+import logo from "../assets/logo.png";
+import "./Home.css";
 import "./chat.css";
 
 const database = getDatabase(appFirebase);
@@ -33,7 +21,9 @@ const Home = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [editProductId, setEditProductId] = useState(null);
   const [editProductImageUrl, setEditProductImageUrl] = useState("");
-  const [filter, setFilter] = useState(""); // Añade el estado para el filtro
+  const [filter, setFilter] = useState("");
+
+  const user = auth.currentUser;
 
   const handleInputChange1 = (e) => {
     setInputValue1(e.target.value);
@@ -47,7 +37,7 @@ const Home = () => {
     setFile(e.target.files[0]);
   };
 
-  const handleFilterChange = (e) => { // Añade el manejador de cambio para el filtro
+  const handleFilterChange = (e) => {
     setFilter(e.target.value);
   };
 
@@ -57,34 +47,27 @@ const Home = () => {
       return;
     }
 
-    const user = auth.currentUser;
     const newDocRef = push(ref(database, "products"));
-    const storageReference = storageRef(
-      storage,
-      `products/${newDocRef.key}/${file.name}`
-    );
+    const storageReference = storageRef(storage, `products/${newDocRef.key}/${file.name}`);
 
-    uploadBytes(storageReference, file)
-      .then((snapshot) => {
-        getDownloadURL(snapshot.ref).then((downloadURL) => {
-          set(newDocRef, {
-            productName: inputValue1,
-            productDescription: inputValue2,
-            imageUrl: downloadURL,
-            userId: user.uid,
-          })
-            .then(() => {
-              alert("Data saved successfully");
-              fetchProducts();
-            })
-            .catch((error) => {
-              alert("Error: " + error.message);
-            });
+    uploadBytes(storageReference, file).then((snapshot) => {
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        set(newDocRef, {
+          productName: inputValue1,
+          productDescription: inputValue2,
+          imageUrl: downloadURL,
+          userId: user.uid,
+          status: "pending"
+        }).then(() => {
+          alert("Data saved successfully");
+          fetchProducts();
+        }).catch((error) => {
+          alert("Error: " + error.message);
         });
-      })
-      .catch((error) => {
-        alert("Error uploading image: " + error.message);
       });
+    }).catch((error) => {
+      alert("Error uploading image: " + error.message);
+    });
   };
 
   const updateProduct = async () => {
@@ -92,10 +75,7 @@ const Home = () => {
     let imageUrl = editProductImageUrl;
 
     if (file) {
-      const storageReference = storageRef(
-        storage,
-        `products/${editProductId}/${file.name}`
-      );
+      const storageReference = storageRef(storage, `products/${editProductId}/${file.name}`);
       const snapshot = await uploadBytes(storageReference, file);
       imageUrl = await getDownloadURL(snapshot.ref);
     }
@@ -103,21 +83,19 @@ const Home = () => {
     update(productRef, {
       productName: inputValue1,
       productDescription: inputValue2,
-      imageUrl: imageUrl,
-    })
-      .then(() => {
-        alert("Product updated successfully");
-        fetchProducts();
-        setIsEditing(false);
-        setEditProductId(null);
-        setInputValue1("");
-        setInputValue2("");
-        setFile(null);
-        setEditProductImageUrl("");
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
+      imageUrl: imageUrl
+    }).then(() => {
+      alert("Product updated successfully");
+      fetchProducts();
+      setIsEditing(false);
+      setEditProductId(null);
+      setInputValue1("");
+      setInputValue2("");
+      setFile(null);
+      setEditProductImageUrl("");
+    }).catch((error) => {
+      alert("Error: " + error.message);
+    });
   };
 
   const fetchProducts = () => {
@@ -126,7 +104,9 @@ const Home = () => {
       const data = snapshot.val();
       const productList = [];
       for (let id in data) {
-        productList.push({ id, ...data[id] });
+        if (data[id].status === "approved") {
+          productList.push({ id, ...data[id] });
+        }
       }
       setProducts(productList);
     });
@@ -134,14 +114,12 @@ const Home = () => {
 
   const deleteProduct = (id) => {
     const productRef = ref(database, `products/${id}`);
-    remove(productRef)
-      .then(() => {
-        alert("Product deleted successfully");
-        fetchProducts();
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
+    remove(productRef).then(() => {
+      alert("Product deleted successfully");
+      fetchProducts();
+    }).catch((error) => {
+      alert("Error: " + error.message);
+    });
   };
 
   const editProduct = (product) => {
@@ -166,10 +144,13 @@ const Home = () => {
     <div>
       <nav>
         <img src={logo} alt="Logo" className="nav-logo" />
-        <h1> MARKETPLACE UV</h1>
+        <h1>MARKETPLACE UV</h1>
+        <Notifications userId={user.uid} />
         <button onClick={() => signOut(auth)}>Logout</button>
       </nav>
+      
       <div className="container">
+        
         <form>
           <label htmlFor="file-upload" className="custom-file-upload">
             Seleccionar Producto(s)
@@ -199,6 +180,7 @@ const Home = () => {
         </form>
       </div>
      
+      <Chat />
       <div className="product-section">
         <h2>Product List</h2>
         <input

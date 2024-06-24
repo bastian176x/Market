@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import appFirebase from "../credenciales";
 import { getDatabase, ref, onValue, update, push, set } from "firebase/database";
+import logo from "../assets/logo.png"; 
+import "./Admin.css";
 
 const database = getDatabase(appFirebase);
 
@@ -27,7 +29,7 @@ const Admin = () => {
     const productRef = ref(database, `products/${id}`);
     update(productRef, { status: "approved" })
       .then(() => {
-        // Añadir una notificación
+        // Add a notification
         const newNotificationRef = push(ref(database, 'notifications'));
         return set(newNotificationRef, {
           userId: userId,
@@ -50,6 +52,9 @@ const Admin = () => {
 
   return (
     <div className="container">
+      <nav>
+        <img src={logo} alt="Logo" className="nav-logo" />
+      </nav>
       <h1>Pending Products</h1>
       <div className="row">
         {products.length > 0 ? (
@@ -66,13 +71,13 @@ const Admin = () => {
                       className="btn btn-success"
                       onClick={() => handleApprove(product.id, product.userId)}
                     >
-                      Aprobar
+                      Approve
                     </button>
                     <button
                       className="btn btn-danger"
                       onClick={() => handleReject(product.id)}
                     >
-                      Rechazar
+                      Reject
                     </button>
                   </div>
                 </div>

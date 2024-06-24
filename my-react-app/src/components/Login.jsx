@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { getDatabase, ref, set } from "firebase/database";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import logoAzul from "../assets/logoazul.png"; // Importa la imagen correctamente
 import appFirebase from "../credenciales";
 import "./estilo.css"; // Asegúrate de que los estilos se aplican correctamente
@@ -16,6 +17,7 @@ const database = getDatabase(appFirebase);
 
 const Login = () => {
   const [register, setRegister] = useState(false);
+  const navigate = useNavigate();
 
   const funcAuthentication = async (e) => {
     e.preventDefault();
@@ -25,12 +27,14 @@ const Login = () => {
     if (register) {
       try {
         await createUserWithEmailAndPassword(auth, correo, password);
+        navigate("/home"); // Redirigir a Home después del registro
       } catch (error) {
         alert(error.message);
       }
     } else {
       try {
         await signInWithEmailAndPassword(auth, correo, password);
+        navigate("/home"); // Redirigir a Home después del inicio de sesión
       } catch (error) {
         alert(error.message);
       }
@@ -53,6 +57,7 @@ const Login = () => {
         })
           .then(() => {
             console.log("Data saved successfully!");
+            navigate("/home"); // Redirigir a Home después del inicio de sesión con Google
           })
           .catch((error) => {
             console.error("Failed to save data", error);

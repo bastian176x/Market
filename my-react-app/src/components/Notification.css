@@ -1,0 +1,62 @@
+/* Estilo para el botón de notificaciones */
+.notification-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #3498db;
+    transition: color 0.3s;
+}
+
+.notification-button:hover {
+    color: #2980b9;
+}
+
+/* Contenedor de notificaciones */
+.notifications {
+    position: fixed;
+    top: 50px;
+    right: 10px;
+    width: 300px;
+    z-index: 1000;
+    padding: 10px;
+    background-color: #230750;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Notificación individual */
+.notification {
+    background-color: #000000;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s, box-shadow 0.3s;
+}
+
+/* Hover en notificación */
+.notification:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón general */
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 20px; /* Asegura espacio entre el botón y el formulario */
+    transition: background-color 0.3s;
+}
+
+/* Hover en botón */
+button:hover {
+    background-color: #2980b9;
+}

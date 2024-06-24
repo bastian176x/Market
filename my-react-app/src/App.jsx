@@ -1,30 +1,47 @@
-import { getAuth, onAuthStateChanged } from "firebase/auth";
-import React, { useEffect, useState } from "react";
-import "./App.css";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import appFirebase from "./credenciales";
+import { useState, useEffect } from 'react';
+import './App.css';
+import appFirebase from './credenciales';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Login from './components/Login';
+import Home from './components/Home';
+import Admin from './components/Admin';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
 const auth = getAuth(appFirebase);
 
 function App() {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Este efecto se suscribe al estado de autenticación cuando el componente se monta
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
+      setUser(user);
+      setLoading(false);
     });
 
-    // Función de limpieza que se llama cuando el componente se desmonta
-    return unsubscribe;
-  }, []); // Dependencias vacías aseguran que el efecto se ejecute solo una vez
+    return () => unsubscribe();
+  }, []);
 
-  return <div>{user ? <Home correoUsuario={user.email} /> : <Login />}</div>;
+  if (loading) {
+    return <div>Cargando...</div>;
+  }
+
+  return (
+    <Router>
+      <Routes>
+        <Route path="/admin" element={<Admin/>}/>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/home"
+          element={user ? <Home correoUsuario={user.email} userId={user.uid} /> : <Navigate to="/login" />}
+        />
+        <Route
+          path="/"
+          element={user ? <Navigate to="/home" /> : <Navigate to="/login" />}
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
